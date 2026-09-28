@@ -18,7 +18,8 @@ OKF viewer (concept graph + detail panels) built with the vendored
 [open-knowledge-format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
 (see [site/vendor/ATTRIBUTION.md](site/vendor/ATTRIBUTION.md)).
 Rebuild locally with `python3 site/build.py` (requires `pyyaml`); CI
-rebuilds and deploys to `gh-pages` on every `main` push.
+rebuilds it and deploys to `api.friedman.jp/Friedman-cli-OKF/` on every
+`main` push (requires the `API_PAGES_TOKEN` repo secret).
 
 ## Layout
 
