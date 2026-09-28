@@ -1,9 +1,0 @@
-.DS_Store
-*~
-.vscode/
-.idea/
-__pycache__/
-.venv/
-node_modules/
-.agents/
-site/dist/
