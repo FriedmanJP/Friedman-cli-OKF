@@ -6,21 +6,40 @@ knowledge bundle describing every feature and command of
 
 ## Status
 
-Scaffolding. Deep research into upstream `Friedman-cli` in progress;
-bundle directories will mirror the CLI's command tree once the
-research phase lands.
+Built 2026-09-28: 39 `type: Feature` concepts across 12 domain
+directories covering all 477 CLI leaves, pinned to upstream
+Friedman-cli `66bb97e5`. All concepts carry `status: draft` pending
+human review.
 
-## Layout (planned)
+Browse the rendered bundle at
+<https://api.friedman.jp/Friedman-cli-OKF/> — a self-contained
+OKF viewer (concept graph + detail panels) built with the vendored
+`reference_agent` visualizer from
+[open-knowledge-format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
+(see [site/vendor/ATTRIBUTION.md](site/vendor/ATTRIBUTION.md)).
+Rebuild locally with `python3 site/build.py` (requires `pyyaml`); CI
+rebuilds and deploys to `gh-pages` on every `main` push.
 
-This repository will itself be the OKF bundle (bundle at repo root),
-following the structure of
-[MacroEconometricModels-OKF](https://github.com/FriedmanJP/MacroEconometricModels-OKF):
+## Layout
+
+This repository is itself the OKF bundle (bundle at repo root):
 
 ```text
 index.md                  # bundle root index (carries okf_version)
 log.md                    # bundle update history
 overview.md               # type: Package — what Friedman-cli is
-<domain>/                 # one directory per CLI command area
+estimate/                 # time-series, regression, regime/volatility, panel
+test/                     # unit-root, cointegration, diagnostics, panel/var
+impulse/                  # irf, fevd, hd
+forecast/                 # forecast, predict, residuals, filter/nowcast
+data/                     # handles, simulate, clean
+io/                       # tables, classical, networks/mrio
+dsge/                     # core, bayes, hadsge, family
+causal-policy/            # did, counterfactuals, menus
+spectral-filter/          # density, cross-spectra
+infra/                    # model handles, serve/show, repl/completions
+configuration/            # config files, envelope, cli engine
+installation-architecture/ # installation, architecture, testing
 scripts/validate_okf.py   # bundle conformance checker (also runs in CI)
 ```
 
