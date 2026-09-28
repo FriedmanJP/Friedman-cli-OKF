@@ -13,8 +13,6 @@ jobs:
   build-deploy:
     name: Build viewer and deploy to api.friedman.jp
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - uses: actions/setup-python@v5
@@ -27,10 +25,13 @@ jobs:
       - name: Build viewer site
         run: python3 site/build.py
       - name: Deploy to api.friedman.jp repo
-        if: secrets.API_PAGES_TOKEN != ''
         env:
           API_PAGES_TOKEN: ${{ secrets.API_PAGES_TOKEN }}
         run: |
+          if [ -z "${API_PAGES_TOKEN}" ]; then
+            echo "site deploy skipped (API_PAGES_TOKEN secret not set)"
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git clone --depth 1 "https://x-access-token:${API_PAGES_TOKEN}@github.com/FriedmanJP/api.friedman.jp.git" /tmp/api-site
@@ -41,9 +42,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "site: no changes to deploy"
           else
-            git commit -m "site: rebuild Friedman-cli-OKF viewer from Friedman-cli-OKF@${GITHUB_SHA::7}"
+            git commit -m "site: rebuild Friedman-cli-OKF viewer"
             git push origin main
           fi
-      - name: Deploy skipped (no API_PAGES_TOKEN secret)
-        if: secrets.API_PAGES_TOKEN == ''
-        run: echo "site deploy skipped (API_PAGES_TOKEN secret not set)"
